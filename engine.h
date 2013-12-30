@@ -25,8 +25,6 @@ t_orderid limit(t_order order);
 */
 void cancel(t_orderid orderid);
 
-
-
 // CALLBACKS
 
 /* IN: execution: execution report 

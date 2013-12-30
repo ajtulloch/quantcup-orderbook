@@ -1,7 +1,6 @@
-all:
-	gcc -O3 -c engine.c
-	gcc -O3 test.c -o test
-	gcc -O3 score.c -lm -lrt -o score
+BUILD_DIR = build
 
-clean:
-	rm -f engine.o test score a.out *~
+build:
+	mkdir -p $(BUILD_DIR) && cd $(BUILD_DIR) && cmake ../ -G Ninja && ninja -v
+
+.PHONY: build

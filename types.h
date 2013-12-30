@@ -1,7 +1,13 @@
-#ifndef TYPES_H_
-#define TYPES_H_
+#pragma once
 
+#include "limits.h"
+#include "constants.h"
+#include <boost/serialization/strong_typedef.hpp>
+#include <array>
 /* Order Id */
+
+typedef std::array<char, OB::kFieldLength> Field;
+
 typedef unsigned long t_orderid;
 
 /* Price
@@ -10,7 +16,6 @@ typedef unsigned long t_orderid;
    eg the price 123.45 = 12345
    eg the price 23.45 = 2345 
    eg the price 23.4 = 2340 */
-typedef unsigned short t_price;
 
 /* Order Size */
 typedef unsigned long t_size;
@@ -18,23 +23,21 @@ typedef unsigned long t_size;
 /* Side 
    Ask=1, Bid=0 */
 typedef int t_side;
-int is_ask(t_side side) { return side; }
+inline int is_ask(t_side side) { return side; }
+
 
 /* Limit Order */ 
 typedef struct {
-  char symbol[STRINGLEN];
-  char trader[STRINGLEN];
+  Field symbol;
+  Field trader;
   t_side side;
   t_price price;
   t_size size;
 } t_order;
 
+
+
 /* Execution Report 
    send one per opposite-sided order 
    completely filled */
 typedef t_order t_execution;
-
-
-
-
-#endif // TYPES_H_
