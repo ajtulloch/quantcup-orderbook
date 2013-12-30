@@ -7,6 +7,9 @@
 
 #include <stdlib.h>
 
+#define MYDATA t_order_in
+#define MYDATAINIT {{nullptr, nullptr, 0, 0, 0}, 0}
+
 struct node_struct {
   MYDATA data;
   struct node_struct * prev;
@@ -25,7 +28,7 @@ typedef struct ll {
   Returns a pointer to the new node, or NULL on error
 */
 node * new_node(MYDATA data, node * prev, node * next) {
-  node * rv = malloc(sizeof(node));
+  node * rv = (node *) malloc(sizeof(node));
   rv->data = data;
   rv->prev = prev;
   rv->next = next;
@@ -37,7 +40,7 @@ node * new_node(MYDATA data, node * prev, node * next) {
   Returns a pointer to the new node, or NULL on error
 */
 node * new_node_empty(node * prev, node * next) {
-  node * rv = malloc(sizeof(node));
+  node * rv = (node *)malloc(sizeof(node));
   //  memset(&rv->data, 0, sizeof(rv->data));
   rv->prev = prev;
   rv->next = next;
@@ -49,7 +52,7 @@ node * new_node_empty(node * prev, node * next) {
   Returns a pointer to the new list, or NULL on error
 */
 list * new_list() {
-  list * rv = malloc(sizeof(node));
+  list * rv = (list *)malloc(sizeof(node));
   node * tail = new_node_empty(NULL, NULL);
   rv->head = new_node_empty(NULL, tail);
   
