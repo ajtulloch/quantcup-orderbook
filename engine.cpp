@@ -17,8 +17,8 @@ typedef struct {
 
 // DOUBLY LINKED LIST
 #define MYDATA t_order_in
-#define MYDATAINIT {{'', '', 0, 0, 0}, 0}
-#include "double_link_list.c"
+#define MYDATAINIT {{nullptr, nullptr, 0, 0, 0}, 0}
+#include "double_link_list.cpp"
 
 // GLOBALS
 /* Stores all live bids and asks*/

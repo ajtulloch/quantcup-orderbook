@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "limits.h"
 #include "types.h"
-#include "engine.c"
+#include "engine.h"
 
 /* Besides crashing, the only way to sense 
    what is happening internally via the 
@@ -14,6 +14,8 @@
    multiple bits of base functionality
    in limit, cancel, and execution to even 
    get to the most basic nontrivial tests. */
+int test_cancel(t_order orders1[], unsigned orders1_len, t_orderid cancels[], unsigned cancels_len, t_order orders2[], unsigned orders2_len, t_execution execs[], unsigned execs_len);
+int test(t_order orders[], unsigned orders_len, t_execution execs[], unsigned execs_len);
 
 #define TEST(num, orders, execs) t_order o ## num [] = orders ; t_execution x ## num [] = execs ; correct += test( o ## num , sizeof( o ## num )/sizeof(t_order) , x ## num , sizeof( x ## num )/sizeof(t_execution));
 #define TEST_CANCEL(num, orders1, cancels, orders2, execs) t_order o1st ## num [] = orders1 ; t_orderid c ## num [] = cancels ; t_order o2nd ## num [] = orders2 ; t_execution x ## num [] = execs ; correct += test_cancel( o1st ## num , sizeof( o1st ## num )/sizeof(t_order), c ## num , sizeof( c ## num )/sizeof(t_orderid), o2nd ## num , sizeof( o2nd ## num )/sizeof(t_order) , x ## num, sizeof( x ## num )/sizeof(t_execution));

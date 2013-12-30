@@ -18,7 +18,7 @@ typedef unsigned long t_size;
 /* Side 
    Ask=1, Bid=0 */
 typedef int t_side;
-int is_ask(t_side side) { return side; }
+inline int is_ask(t_side side) { return side; }
 
 /* Limit Order */ 
 typedef struct {
