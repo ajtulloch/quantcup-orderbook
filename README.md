@@ -15,10 +15,23 @@ code used, to reduce the amount of code, not hand-roll our own
 data structures, etc.  It seemed an interesting question to see if such
 a solution could be as fast as the highly-tuned C implementation.
 
+## Files ##
 
+Relevant files are
 
++ `order_book.cpp`
++ `order_book.h`
++ `constants.h`
++ `types.h`
 
+The rest is provided by the QuantCup competition.
+
+## Performance ##
+
+On my 2.4 GHz Intel i7, there is no statistically signficant
+difference between the winning C implementation and the C++
+implementation.  The C++ implementation is significantly cleaner
+(eschewing global variables, using `boost::intrusive` for our linked
+list implementation, etc).
 
 [QuantCup]: http://www.quantcup.org/home/spec
-
-
