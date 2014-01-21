@@ -15,7 +15,7 @@ void init();
 void destroy();
 
 /* IN: order: limit order to add to book
-   OUT: orderid assigned to order 
+   OUT: orderid assigned to order
         start from 1 and increment with each call */
 t_orderid limit(t_order order);
 
@@ -27,9 +27,8 @@ void cancel(t_orderid orderid);
 
 // CALLBACKS
 
-/* IN: execution: execution report 
+/* IN: execution: execution report
    OUT: */
 void execution(t_execution exec);
 
-
-#endif // ENGINE_H_
+#endif  // ENGINE_H_
