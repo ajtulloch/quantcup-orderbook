@@ -15,7 +15,7 @@ void executeTrade(const Field& symbol, const Field& buyTrader,
                   t_size tradeSize) {
   t_execution exec;
 
-  if (tradeSize == 0)    /* Skip orders that have been cancelled */
+  if (tradeSize == 0) /* Skip orders that have been cancelled */
     return;
 
   exec.symbol = symbol;
@@ -25,13 +25,12 @@ void executeTrade(const Field& symbol, const Field& buyTrader,
 
   exec.side = 0;
   exec.trader = buyTrader;
-  execution(exec);                  /* Report the buy-side trade */
+  execution(exec); /* Report the buy-side trade */
 
   exec.side = 1;
   exec.trader = sellTrader;
-  execution(exec);                  /* Report the sell-side trade */
+  execution(exec); /* Report the sell-side trade */
 }
-
 }
 
 OrderBook& OrderBook::get() {
@@ -42,7 +41,7 @@ OrderBook& OrderBook::get() {
 void OrderBook::initialize() {
   /* Initialize the price point array */
   pricePoints.resize(kMaxPrice);
-  for (auto& el: pricePoints) {
+  for (auto& el : pricePoints) {
     el.clear();
   }
 
@@ -59,21 +58,21 @@ t_orderid OrderBook::limit(t_order& order) {
   t_price price = order.price;
   t_size orderSize = order.size;
 
-  if (order.side == 0) {          /* Buy order */
+  if (order.side == 0) {/* Buy order */
     /* Look for outstanding sell orders that cross with the incoming order */
     if (price >= askMin) {
       auto ppEntry = pricePoints.begin() + askMin;
       do {
         auto bookEntry = ppEntry->begin();
-        while(bookEntry != ppEntry->end()) {
+        while (bookEntry != ppEntry->end()) {
           if (bookEntry->size < orderSize) {
-            executeTrade(order.symbol, order.trader,
-                          bookEntry->trader, price, bookEntry->size);
+            executeTrade(order.symbol, order.trader, bookEntry->trader, price,
+                         bookEntry->size);
             orderSize -= bookEntry->size;
             ++bookEntry;
           } else {
-            executeTrade(order.symbol, order.trader,
-                          bookEntry->trader, price, orderSize);
+            executeTrade(order.symbol, order.trader, bookEntry->trader, price,
+                         orderSize);
             if (bookEntry->size > orderSize)
               bookEntry->size -= orderSize;
             else
@@ -91,32 +90,31 @@ t_orderid OrderBook::limit(t_order& order) {
         ppEntry->clear();
         ppEntry++;
         askMin++;
-      } while(price >= askMin);
+      } while (price >= askMin);
     }
 
     auto entry = arenaBookEntries.begin() + (++curOrderID);
     entry->size = orderSize;
     entry->trader = order.trader;
     pricePoints[price].push_back(*entry);
-    if (bidMax < price)
-      bidMax = price;
+    if (bidMax < price) bidMax = price;
     return curOrderID;
 
-  } else {                     /* Sell order */
+  } else {/* Sell order */
     /* Look for outstanding Buy orders that cross with the incoming order */
     if (price <= bidMax) {
       auto ppEntry = pricePoints.begin() + bidMax;
       do {
         auto bookEntry = ppEntry->begin();
-        while(bookEntry != ppEntry->end()) {
+        while (bookEntry != ppEntry->end()) {
           if (bookEntry->size < orderSize) {
-            executeTrade(order.symbol, bookEntry->trader,
-                          order.trader, price, bookEntry->size);
+            executeTrade(order.symbol, bookEntry->trader, order.trader, price,
+                         bookEntry->size);
             orderSize -= bookEntry->size;
             ++bookEntry;
           } else {
-            executeTrade(order.symbol, bookEntry->trader,
-                          order.trader,price, orderSize);
+            executeTrade(order.symbol, bookEntry->trader, order.trader, price,
+                         orderSize);
             if (bookEntry->size > orderSize)
               bookEntry->size -= orderSize;
             else
@@ -141,8 +139,7 @@ t_orderid OrderBook::limit(t_order& order) {
     entry->size = orderSize;
     entry->trader = order.trader;
     pricePoints[price].push_back(*entry);
-    if (askMin > price)
-      askMin = price;
+    if (askMin > price) askMin = price;
     return curOrderID;
   }
 }
@@ -150,6 +147,4 @@ t_orderid OrderBook::limit(t_order& order) {
 void OrderBook::cancel(t_orderid orderid) {
   arenaBookEntries[orderid].size = 0;
 }
-
 }
-

@@ -22,17 +22,15 @@ class OrderBook : public boost::noncopyable {
 
  private:
   OrderBook() {}
-  
+
   struct OrderBookEntry : public boost::intrusive::slist_base_hook<> {
-    t_size size{0};                     /* Order size * */
+    t_size size{0}; /* Order size * */
     Field trader{};
   };
 
   // pricePoint: describes a single price point in the limit order book.
   typedef boost::intrusive::slist<
-    OrderBookEntry,
-    boost::intrusive::cache_last<true>
-    > PricePoint;
+      OrderBookEntry, boost::intrusive::cache_last<true> > PricePoint;
 
   // An array of pricePoint structures representing the entire limit order book
   std::vector<OrderBookEntry> arenaBookEntries;
@@ -45,5 +43,4 @@ class OrderBook : public boost::noncopyable {
   // Maximum Bid price
   t_price bidMax;
 };
-
 }

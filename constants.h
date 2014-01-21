@@ -19,8 +19,4 @@ constexpr t_price kMinPrice = 1;
 constexpr uint32_t kMaxLiveOrders = std::numeric_limits<t_price>::max();
 
 constexpr size_t kFieldLength = 4;
-
 }
-
-
-
