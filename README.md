@@ -34,4 +34,16 @@ implementation.  The C++ implementation is significantly cleaner
 (eschewing global variables, using `boost::intrusive` for our linked
 list implementation, etc).
 
+## Replication ##
+
+To replicate these results, just run:
+
+    $ git checkout winning-cpp-engine
+    $ make build && build/test && for i in {1..10}; do echo $i && \
+    build/score 2>&1 | tail -n1 | cut -d ' ' -f 3; done
+    
+    $ git checkout winning-c-engine
+    $ make build && build/test && for i in {1..10}; do echo $i && \
+    build/score 2>&1 | tail -n1 | cut -d ' ' -f 3; done
+
 [QuantCup]: http://www.quantcup.org/home/spec
